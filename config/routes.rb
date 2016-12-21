@@ -1,5 +1,14 @@
 Rails.application.routes.draw do
-  resources :landings
+	get 'auth/failure', to: redirect('/')
+	get 'auth/:provider/callback', to: 'sessions#create'
+	get 'signout', to: 'sessions#destroy', as: 'signout'
+  resources :sessions, only: [:create, :destroy]
 
-  root to: 'landings#index'
+  resources :home, only: [:show]
+
+
+  root to: 'home#show'
+
 end
+
+
